@@ -30,11 +30,11 @@ SELECT CONCAT(p.nombre,' ',p.apellido1)AS profesor FROM persona p LEFT JOIN asig
 -- 14 Retorna un llistat amb les assignatures que no tenen un professor/a assignat.
 SELECT a.* FROM asignatura a LEFT JOIN profesor p ON a.id_profesor = p.id_profesor WHERE a.id_profesor IS NULL;
 -- 15 Retorna un llistat amb tots els departaments que no han impartit assignatures en cap curs escolar.
-SELECT d.nombre FROM departamento d LEFT JOIN profesor pr ON d.id = pr.id_departamento LEFT JOIN asignatura a ON a.id_profesor = pr.id_profesor WHERE a.id IS NULL;
+SELECT DISTINCT d.nombre FROM departamento d LEFT JOIN profesor pr ON d.id = pr.id_departamento LEFT JOIN asignatura a ON a.id_profesor = pr.id_profesor WHERE a.id IS NULL;
 -- 16 Retorna el nombre total d'alumnes que hi ha.
-SELECT COUNT(*) FROM persona WHERE tipo = 'alumno';
+SELECT COUNT(*) AS num_alumnos FROM persona WHERE tipo = 'alumno';
 -- 17 Calcula quants alumnes van néixer en 1999.
-SELECT COUNT(*) FROM persona WHERE tipo = 'alumno' AND YEAR(fecha_nacimiento) = 1999;
+SELECT COUNT(*) AS num_alumnos FROM persona WHERE tipo = 'alumno' AND YEAR(fecha_nacimiento) = 1999;
 -- 18 Calcula quants professors/es hi ha en cada departament. El resultat només ha de mostrar dues columnes, una amb el nom del departament i una altra amb el nombre de professors/es que hi ha en aquest departament. El resultat només ha d'incloure els departaments que tenen professors/es associats i haurà d'estar ordenat de major a menor pel nombre de professors/es.
 SELECT d.nombre AS departamento, p.nombre, COUNT(pr.id_profesor) AS total_profesores FROM departamento d JOIN profesor pr ON d.id = pr.id_departamento JOIN persona p ON pr.id_profesor = p.id ORDER BY p.nombre DESC;
 -- 19 Retorna un llistat amb tots els departaments i el nombre de professors/es que hi ha en cadascun d'ells. Tingui en compte que poden existir departaments que no tenen professors/es associats. Aquests departaments també han d'aparèixer en el llistat.
